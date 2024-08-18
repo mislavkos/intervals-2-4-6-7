@@ -148,10 +148,10 @@
       const notes = allSemitones.map(e => e[0]);
 
       const intervals = [
-        { name: "2nd", steps: 2 },
-        { name: "4th", steps: 5 },
-        { name: "6th", steps: 9 },
-        { name: "7th", steps: 11 },
+        { name: "2nd", steps: 2, formula: "1 step ⬆ from root" },
+        { name: "4th", steps: 5, formula: "½ step ⬆ from 3rd" },
+        { name: "6th", steps: 9, formula: "1 step ⬆ from 5th" },
+        { name: "7th", steps: 11, formula: "½ step ⬇ from root" },
       ];
 
       let showAnswer = false;
@@ -172,16 +172,17 @@
         const root = semitones[0];
         const randomInterval = getRandomElement(intervals);
         const answer = semitones[randomInterval.steps];
-        currentQuestion = { note: root, interval: randomInterval.name, answer: answer };
+        currentQuestion = { note: root, interval: randomInterval, answer: answer };
 
-        content.innerHTML = `<div class="content question">${currentQuestion.interval} of ${currentQuestion.note}?</div>`;
+        content.innerHTML = `<div class="content question">${currentQuestion.interval.name} of ${currentQuestion.note}?</div>`;
         footer.innerHTML = ""; // Clear the footer
-        console.log("currentQuestion:", currentQuestion.interval, "of", currentQuestion.note, "=>", currentQuestion.answer);
+        console.log("currentQuestion:", currentQuestion.interval.name, "of", currentQuestion.note, "=>", currentQuestion.answer);
       }
 
       function displayAnswer() {
         showAnswer = true;
         content.innerHTML = `<div class="content question">${currentQuestion.answer}</div>`;
+        content.innerHTML += `<div class="footer">${currentQuestion.interval.formula}</div>`;
         // console.log("currentQuestion:", currentQuestion.interval, "of", currentQuestion.note, "=>", currentQuestion.answer);
       }
 
